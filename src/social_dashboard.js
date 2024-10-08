@@ -11,68 +11,74 @@ const rangatahiData = [
 ];
 
 const genderData = [
-  { month: 'Jul', wahine: 70, tane: 54 },
-  { month: 'Aug', wahine: 200, tane: 160 },
-  { month: 'Sep', wahine: 120, tane: 84 },
-  { month: 'Oct', wahine: 170, tane: 130 },
-  { month: 'Nov', wahine: 200, tane: 150 },
-  { month: 'Dec', rangatahi: 230, tane: 170 },
+    { month: 'Jul', wahine: 1764, tane: 609 },
+    { month: 'Aug', wahine: 4707, tane: 1732 },
+    { month: 'Sep', wahine: 2359, tane: 714 },
+    { month: 'Oct', wahine: Math.round(2359 * 1.10), tane: Math.round(714 * 1.10) },
+    { month: 'Nov', wahine: Math.round(2359 * 1.10 * 1.10), tane: Math.round(714 * 1.10 * 1.10) },
+    { month: 'Dec', wahine: Math.round(2359 * 1.10 * 1.10 * 1.10), tane: Math.round(714 * 1.10 * 1.10 * 1.10) },
 ];
 
 const ageDistribution = [
-  { name: '13-14', value: 30 },
-  { name: '15-16', value: 45 },
-  { name: '17-18', value: 25 },
+  { name: '13 to 17 years', value: 124 },
+  { name: '18 to 24 years', value: 423 },
+  { name: '25 to 34 years', value: 531 },
+  { name: '35 to 44 years', value: 484 },
+  { name: '45 to 54 years', value: 556 },
+  { name: '55 to 64 years', value: 208 },
+  { name: '65 years and over', value: 116 }
 ];
 
-const interestData = [
-  { interest: 'Medicine', value: 35 },
-  { interest: 'Nursing', value: 25 },
-  { interest: 'Dentistry', value: 15 },
-  { interest: 'Pharmacy', value: 10 },
-  { interest: 'Allied Health', value: 15 },
-];
+const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8', '#82ca9d', '#ffc658'];
 
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8'];
+const WhakapikeAkeDashboard = () => {
+  const maxValue = Math.max(...genderData.flatMap(d => [d.wahine, d.tane]));
+  const yAxisTicks = [0, 1000, 2000, 3000, 4000, 5000];
 
-const WhakapikeAkeDashboard = () => (
-  <div className="space-y-8 p-4 bg-gray-100 rounded-lg">
-    <h2 className="text-2xl font-bold mb-4">Whakapiki Ake: Comprehensive Facebook Insights Dashboard</h2>
-    
-    <div className="bg-white p-4 rounded-lg shadow">
-      <h3 className="text-xl font-semibold mb-2">Rangatahi Reach and Content Volume</h3>
-      <ResponsiveContainer width="100%" height={300}>
-        <LineChart data={rangatahiData}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="month" />
-          <YAxis yAxisId="left" />
-          <YAxis yAxisId="right" orientation="right" />
-          <Tooltip />
-          <Legend />
-          <Line yAxisId="left" type="monotone" dataKey="rangatahi" stroke="#8884d8" name="Rangatahi Reach (13-18)" />
-          <Line yAxisId="right" type="monotone" dataKey="content" stroke="#82ca9d" name="Content Volume" />
-        </LineChart>
-      </ResponsiveContainer>
-    </div>
+  return (
+    <div className="space-y-8 p-4 bg-gray-100 rounded-lg">
+      <h2 className="text-2xl font-bold mb-4">Whakapiki Ake: Comprehensive Facebook Insights Dashboard</h2>
+      
+      <div className="bg-white p-4 rounded-lg shadow">
+        <h3 className="text-xl font-semibold mb-2">Rangatahi Reach and Content Volume</h3>
+        <ResponsiveContainer width="100%" height={300}>
+          <LineChart data={rangatahiData}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="month" />
+            <YAxis yAxisId="left" />
+            <YAxis yAxisId="right" orientation="right" />
+            <Tooltip />
+            <Legend />
+            <Line yAxisId="left" type="monotone" dataKey="rangatahi" stroke="#8884d8" name="Rangatahi Reach (13-18)" />
+            <Line yAxisId="right" type="monotone" dataKey="content" stroke="#82ca9d" name="Content Volume" />
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
 
-    <div className="bg-white p-4 rounded-lg shadow">
-      <h3 className="text-xl font-semibold mb-2">Gender Balance in Rangatahi Reach</h3>
-      <ResponsiveContainer width="100%" height={300}>
-        <LineChart data={genderData}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="month" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Line type="monotone" dataKey="wahine" stroke="#8884d8" name="Wahine (13-18)" />
-          <Line type="monotone" dataKey="tane" stroke="#82ca9d" name="Tāne (13-18)" />
-        </LineChart>
-      </ResponsiveContainer>
-    </div>
+      <div className="bg-white p-4 rounded-lg shadow">
+        <h3 className="text-xl font-semibold mb-2">Gender Balance in Audience Reach</h3>
+        <ResponsiveContainer width="100%" height={300}>
+          <LineChart 
+            data={genderData}
+            margin={{ top: 5, right: 30, left: 50, bottom: 5 }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="month" />
+            <YAxis 
+              domain={[0, Math.ceil(maxValue / 1000) * 1000]}
+              ticks={yAxisTicks}
+              tickFormatter={(value) => `${value / 1000}k`}
+            />
+            <Tooltip formatter={(value) => value.toLocaleString()} />
+            <Legend />
+            <Line type="monotone" dataKey="wahine" stroke="#8884d8" name="Wahine" />
+            <Line type="monotone" dataKey="tane" stroke="#82ca9d" name="Tāne" />
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
 
-    <div className="flex space-x-4">
-      <div className="bg-white p-4 rounded-lg shadow flex-1">
-        <h3 className="text-xl font-semibold mb-2">Age Distribution of Rangatahi Audience</h3>
+      <div className="bg-white p-4 rounded-lg shadow">
+        <h3 className="text-xl font-semibold mb-2">Age Distribution of Audience</h3>
         <ResponsiveContainer width="100%" height={300}>
           <PieChart>
             <Pie
@@ -94,34 +100,22 @@ const WhakapikeAkeDashboard = () => (
         </ResponsiveContainer>
       </div>
 
-      <div className="bg-white p-4 rounded-lg shadow flex-1">
-        <h3 className="text-xl font-semibold mb-2">Health Career Interests</h3>
-        <ResponsiveContainer width="100%" height={300}>
-          <BarChart data={interestData}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="interest" />
-            <YAxis />
-            <Tooltip />
-            <Bar dataKey="value" fill="#8884d8" />
-          </BarChart>
-        </ResponsiveContainer>
+      <div className="bg-white p-4 rounded-lg shadow">
+        <h3 className="text-xl font-semibold mb-2">Key Insights and Recommendations</h3>
+        <ul className="list-disc pl-5 mt-2">
+          <li>Wahine consistently show higher reach compared to tāne across all months. Develop strategies to increase tāne engagement while maintaining strong wahine reach.</li>
+          <li>There was a significant spike in August for both genders. Investigate the factors behind this spike to potentially replicate its success.</li>
+          <li>The 25-34 and 45-54 age groups have the highest reach. Consider tailoring content for these age groups while also developing strategies to engage the 13-17 year old rangatahi.</li>
+          <li>Rangatahi (13-17) reach is growing steadily. Continue to create targeted, high-quality content for this group.</li>
+          <li>Create age-specific content that addresses the unique interests and needs of each age group, particularly focusing on health career pathways for younger audiences.</li>
+          <li>Time content releases strategically to maximize engagement across different age groups.</li>
+          <li>Develop interactive content like quizzes, live Q&amp;As with Māori health professionals, and virtual tours of health facilities to engage audiences across all age groups.</li>
+          <li>Incorporate more te reo Māori in posts to strengthen cultural connections, especially for younger audiences.</li>
+          <li>Create a series highlighting successful Māori students and professionals across various health fields, representing different age groups and genders.</li>
+        </ul>
       </div>
     </div>
-
-    <div className="bg-white p-4 rounded-lg shadow">
-      <h3 className="text-xl font-semibold mb-2">Key Insights and Recommendations</h3>
-      <ul className="list-disc pl-5 mt-2">
-        <li>Rangatahi reach is growing steadily, with a strong correlation to content volume. Consider increasing high-quality, targeted content.</li>
-        <li>There's a slight gender imbalance favoring wahine. Develop strategies to engage more tāne in health career discussions.</li>
-        <li>The 15-16 age group is our largest audience. Tailor content to their specific needs (e.g., NCEA Level 2 support, early university planning).</li>
-        <li>Medicine and Nursing are the most popular health career interests. Showcase a wider range of health professions to broaden awareness.</li>
-        <li>Time content releases for after-school hours and weekends to maximize engagement.</li>
-        <li>Create more interactive content like quizzes, live Q&amp;As with Māori health professionals, and virtual tours of health facilities.</li>
-        <li>Incorporate more te reo Māori in posts to strengthen cultural connections.</li>
-        <li>Develop a series highlighting successful Māori students and professionals across various health fields.</li>
-      </ul>
-    </div>
-  </div>
-);
+  );
+};
 
 export default WhakapikeAkeDashboard;
