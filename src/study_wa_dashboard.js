@@ -171,12 +171,27 @@ const WhakapikiAkeAnalysis = () => {
         barFill="#82ca9d"
       />
 
-      <VerticalBarChart 
+    <div style={{ width: '100%', height: 600 , marginBottom: '200px'}}>
+    <h2>Career Interests</h2>
+    <ResponsiveContainer width="100%" height="100%">
+        <BarChart
+        layout="vertical"
         data={careerInterestsData}
-        dataKey="count"
-        title="Career Interests"
-        barFill="#8884d8"
-      />
+        margin={{ top: 20, right: 30, left: 150, bottom: 5 }}
+        >
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis type="number" />
+        <YAxis 
+            dataKey="name" 
+            type="category" 
+            width={140}
+            tick={{ fontSize: 12 }}
+        />
+        <Tooltip />
+        <Bar dataKey="count" fill="#8884d8" />
+        </BarChart>
+    </ResponsiveContainer>
+    </div>
 
       <div className="analysis-container">
         <h2>Level 2 and 3 External Achievement Standards</h2>
@@ -194,22 +209,30 @@ const WhakapikiAkeAnalysis = () => {
       </div>
 
       <div className="analysis-container">
-        <h2>Self-Rated Abilities in Subjects</h2>
-        <ResponsiveContainer width="100%" height={400}>
-          <BarChart data={selfRatedAbilitiesData} margin={{top: 20, right: 30, left: 20, bottom: 5}}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="subject" />
-            <YAxis label={{ value: 'Number of Students', angle: -90, position: 'insideLeft' }} />
-            <Tooltip />
-            <Legend />
-            <Bar dataKey="Achieved" stackId="a" fill="#8884d8" />
-            <Bar dataKey="Between_Achieved_and_Merit" stackId="a" fill="#82ca9d" />
-            <Bar dataKey="Merit" stackId="a" fill="#ffc658" />
-            <Bar dataKey="Between_Merit_and_Excellence" stackId="a" fill="#ff7300" />
-            <Bar dataKey="Excellence" stackId="a" fill="#ff0000" />
-          </BarChart>
-        </ResponsiveContainer>
-      </div>
+      <h2>Self-Rated Abilities in Subjects</h2>
+      <ResponsiveContainer width="100%" height={600}>
+        <BarChart 
+          data={selfRatedAbilitiesData} 
+          margin={{top: 20, right: 30, left: 20, bottom: 120}}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis 
+            dataKey="subject" 
+            interval={0} 
+            tick={{ angle: -45, textAnchor: 'end', fontSize: 12 }}
+            height={100}
+          />
+          <YAxis label={{ value: 'Number of Students', angle: -90, position: 'insideLeft' }} />
+          <Tooltip />
+          <Legend wrapperStyle={{paddingTop: "20px"}}/>
+          <Bar dataKey="Achieved" stackId="a" fill="#8884d8" />
+          <Bar dataKey="Between_Achieved_and_Merit" stackId="a" fill="#82ca9d" />
+          <Bar dataKey="Merit" stackId="a" fill="#ffc658" />
+          <Bar dataKey="Between_Merit_and_Excellence" stackId="a" fill="#ff7300" />
+          <Bar dataKey="Excellence" stackId="a" fill="#ff0000" />
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
 
       <div className="analysis-container">
         <h2>Interest in Online Academic Support - Level 2</h2>

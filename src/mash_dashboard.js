@@ -82,20 +82,24 @@ const SurveyDataVisualization = () => {
           </ResponsiveContainer>
         </div>
 
-              {/* New Location Attendance Chart */}
       <div className="mb-12">
-        <h2 className="text-2xl font-semibold mb-4">Location Attendance</h2>
-        <ResponsiveContainer width="100%" height={400}>
-          <BarChart data={locationAttendanceData}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Bar dataKey="value" fill="#8884d8" />
-          </BarChart>
-        </ResponsiveContainer>
-      </div>
+      <h2 className="text-2xl font-semibold mb-4">Location Attendance</h2>
+      <ResponsiveContainer width="100%" height={500}>
+        <BarChart data={locationAttendanceData} margin={{ top: 20, right: 30, left: 20, bottom: 100 }}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis 
+            dataKey="name" 
+            interval={0} 
+            tick={{ angle: -45, textAnchor: 'end', fontSize: 12 }}
+            height={100}
+          />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <Bar dataKey="value" fill="#8884d8" />
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
 
       
         <div>
