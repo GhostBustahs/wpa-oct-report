@@ -1,0 +1,227 @@
+import React from 'react';
+import { BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+
+const WhakapikiAkeAnalysis = () => {
+  // Data for each chart (as provided in previous examples)
+  const interventionsData = [
+    { name: 'MASH 2023 or 2024', count: 35 },
+    { name: 'School Visit 2023 or 2024', count: 21 },
+    { name: 'COACH 2024', count: 20 },
+    { name: 'Zoom Hui 2023 or 2024', count: 11 },
+    { name: 'Study Waananga 2023', count: 9 },
+    { name: 'Te Whee', count: 5 },
+    { name: 'None', count: 2 }
+  ];
+
+  const schoolYearData = [
+    { name: 'Year 12', value: 29 },
+    { name: 'Year 13', value: 25 }
+  ];
+
+  const universityApplicationsData = [
+    { name: 'Biomedical Sciences', count: 15 },
+    { name: 'Bachelor of Health Sciences', count: 12 },
+    { name: 'Certificate in Health Sciences', count: 10 },
+    { name: 'First Year Health Science Otago', count: 8 },
+    { name: 'Other tertiary institution', count: 3 },
+    { name: 'No application yet', count: 6 }
+  ];
+
+  const careerInterestsData = [
+    { name: 'Doctor/Medicine', count: 42 },
+    { name: 'Surgery', count: 7 },
+    { name: 'Nursing', count: 6 },
+    { name: 'Pharmacy', count: 5 },
+    { name: 'Optometry', count: 5 },
+    { name: 'Pediatrics', count: 4 },
+    { name: 'Radiology', count: 3 },
+    { name: 'Other Specialties', count: 8 }
+  ];
+
+  const achievementStandardsData = [
+    { subject: 'Biology', Level2: 35, Level3: 30 },
+    { subject: 'Chemistry', Level2: 32, Level3: 28 },
+    { subject: 'Physics', Level2: 25, Level3: 20 },
+    { subject: 'English', Level2: 30, Level3: 25 },
+    { subject: 'Mathematics', Level2: 28, Level3: 24 },
+    { subject: 'History', Level2: 10, Level3: 8 }
+  ];
+
+  const selfRatedAbilitiesData = [
+    { subject: 'Biology', Achieved: 10, Merit: 25, Excellence: 15 },
+    { subject: 'Chemistry', Achieved: 15, Merit: 20, Excellence: 10 },
+    { subject: 'Physics', Achieved: 20, Merit: 15, Excellence: 5 },
+    { subject: 'English', Achieved: 12, Merit: 22, Excellence: 8 },
+    { subject: 'Mathematics', Achieved: 18, Merit: 18, Excellence: 12 }
+  ];
+
+  const onlineSupportInterestData = [
+    { subject: 'Physics', interested: 25 },
+    { subject: 'Chemistry', interested: 30 },
+    { subject: 'Mathematics', interested: 28 },
+    { subject: 'Calculus', interested: 22 },
+    { subject: 'Statistics', interested: 20 },
+    { subject: 'English', interested: 15 }
+  ];
+
+  return (
+    <div className="whakapiki-ake-analysis">
+      <h1>Whakapiki Ake Program Analysis</h1>
+
+      <div className="analysis-container">
+        <h2>1. Whakapiki Ake Interventions Attended</h2>
+        <BarChart width={600} height={400} data={interventionsData} layout="vertical" margin={{top: 20, right: 30, left: 100, bottom: 5}}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis type="number" />
+          <YAxis dataKey="name" type="category" width={100} />
+          <Tooltip />
+          <Legend />
+          <Bar dataKey="count" fill="#8884d8" name="Number of Attendees" />
+        </BarChart>
+        <div className="insights">
+          <h3>Insights:</h3>
+          <ul>
+            <li>MASH 2023 or 2024 was the most attended intervention, with 35 participants.</li>
+            <li>School Visits and COACH 2024 were also popular, with 21 and 20 attendees respectively.</li>
+            <li>Only 2 students did not attend any interventions, indicating high overall engagement.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div className="analysis-container">
+        <h2>2. Current Year at School</h2>
+        <PieChart width={400} height={300}>
+          <Pie
+            data={schoolYearData}
+            cx={200}
+            cy={150}
+            labelLine={false}
+            outerRadius={80}
+            fill="#8884d8"
+            dataKey="value"
+            label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+          >
+            {schoolYearData.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={['#0088FE', '#00C49F'][index % 2]} />
+            ))}
+          </Pie>
+          <Tooltip />
+          <Legend />
+        </PieChart>
+        <div className="insights">
+          <h3>Insights:</h3>
+          <ul>
+            <li>There's a fairly even split between Year 12 and Year 13 students.</li>
+            <li>Year 12 students make up 54% of participants, while Year 13 students account for 46%.</li>
+            <li>The program is effectively engaging both penultimate and final year secondary school students.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div className="analysis-container">
+        <h2>3. University Program Applications</h2>
+        <BarChart layout="vertical" width={600} height={400} data={universityApplicationsData} margin={{top: 20, right: 30, left: 100, bottom: 5}}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis type="number" />
+          <YAxis dataKey="name" type="category" width={100} />
+          <Tooltip />
+          <Legend />
+          <Bar dataKey="count" fill="#82ca9d" name="Number of Applicants" />
+        </BarChart>
+        <div className="insights">
+          <h3>Insights:</h3>
+          <ul>
+            <li>Biomedical Sciences is the most popular program with 15 applicants.</li>
+            <li>Health-related programs dominate the top choices.</li>
+            <li>6 students have not yet applied, possibly still deciding or in Year 12.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div className="analysis-container">
+        <h2>4. Career Interests</h2>
+        <BarChart layout="vertical" width={600} height={400} data={careerInterestsData} margin={{top: 20, right: 30, left: 100, bottom: 5}}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis type="number" />
+          <YAxis dataKey="name" type="category" width={100} />
+          <Tooltip />
+          <Legend />
+          <Bar dataKey="count" fill="#8884d8" name="Number of Interested Students" />
+        </BarChart>
+        <div className="insights">
+          <h3>Insights:</h3>
+          <ul>
+            <li>Medicine/Doctor is the most common career interest, with 42 students interested.</li>
+            <li>There's a diverse range of medical specialties represented.</li>
+            <li>Clinical roles are more popular than research or administrative health roles.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div className="analysis-container">
+        <h2>5. Level 2 and 3 External Achievement Standards</h2>
+        <BarChart width={600} height={400} data={achievementStandardsData} margin={{top: 20, right: 30, left: 20, bottom: 5}}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="subject" />
+          <YAxis label={{ value: 'Number of Students', angle: -90, position: 'insideLeft' }} />
+          <Tooltip />
+          <Legend />
+          <Bar dataKey="Level2" fill="#8884d8" name="Level 2" />
+          <Bar dataKey="Level3" fill="#82ca9d" name="Level 3" />
+        </BarChart>
+        <div className="insights">
+          <h3>Insights:</h3>
+          <ul>
+            <li>Biology and Chemistry are the most popular subjects for both Level 2 and 3.</li>
+            <li>There's a slight decrease in numbers from Level 2 to Level 3 across all subjects.</li>
+            <li>Science subjects are more popular than humanities, aligning with career interests.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div className="analysis-container">
+        <h2>6. Self-Rated Abilities in Subjects</h2>
+        <BarChart width={600} height={400} data={selfRatedAbilitiesData} margin={{top: 20, right: 30, left: 20, bottom: 5}}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="subject" />
+          <YAxis label={{ value: 'Number of Students', angle: -90, position: 'insideLeft' }} />
+          <Tooltip />
+          <Legend />
+          <Bar dataKey="Achieved" stackId="a" fill="#8884d8" />
+          <Bar dataKey="Merit" stackId="a" fill="#82ca9d" />
+          <Bar dataKey="Excellence" stackId="a" fill="#ffc658" />
+        </BarChart>
+        <div className="insights">
+          <h3>Insights:</h3>
+          <ul>
+            <li>Most students rate themselves at Merit level across subjects.</li>
+            <li>Biology has the highest number of students rating themselves at Excellence level.</li>
+            <li>Physics has the highest proportion of students rating themselves at Achieved level.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div className="analysis-container">
+        <h2>7. Interest in Online Academic Support</h2>
+        <BarChart width={600} height={400} data={onlineSupportInterestData} margin={{top: 20, right: 30, left: 20, bottom: 5}}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="subject" />
+          <YAxis label={{ value: 'Number of Interested Students', angle: -90, position: 'insideLeft' }} />
+          <Tooltip />
+          <Legend />
+          <Bar dataKey="interested" fill="#82ca9d" name="Interested Students" />
+        </BarChart>
+        <div className="insights">
+          <h3>Insights:</h3>
+          <ul>
+            <li>Chemistry has the highest interest for online academic support.</li>
+            <li>There's strong interest in STEM subjects overall.</li>
+            <li>English has the lowest interest, possibly due to students feeling more confident or preferring in-person support for this subject.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default WhakapikiAkeAnalysis;

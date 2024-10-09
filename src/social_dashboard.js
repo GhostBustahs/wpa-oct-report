@@ -2,9 +2,9 @@ import React from 'react';
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 
 const rangatahiData = [
-  { month: 'Jul', rangatahi: 124, content: 38 },
-  { month: 'Aug', rangatahi: 360, content: 56 },
-  { month: 'Sep', rangatahi: 204, content: 40 },
+  { month: 'Jul', rangatahi: 124, content: 20 },
+  { month: 'Aug', rangatahi: 360, content: 70 },
+  { month: 'Sep', rangatahi: 204, content: 61 },
   { month: 'Oct', rangatahi: 300, content: 48 },
   { month: 'Nov', rangatahi: 350, content: 52 },
   { month: 'Dec', rangatahi: 400, content: 55 },
@@ -19,15 +19,36 @@ const genderData = [
     { month: 'Dec', wahine: Math.round(2359 * 1.10 * 1.10 * 1.10), tane: Math.round(714 * 1.10 * 1.10 * 1.10) },
 ];
 
-const ageDistribution = [
-  { name: '13 to 17 years', value: 124 },
-  { name: '18 to 24 years', value: 423 },
-  { name: '25 to 34 years', value: 531 },
-  { name: '35 to 44 years', value: 484 },
-  { name: '45 to 54 years', value: 556 },
-  { name: '55 to 64 years', value: 208 },
-  { name: '65 years and over', value: 116 }
-];
+
+const ageDistributionJuly = [
+    { name: '13 to 17 years', value: 124 },
+    { name: '18 to 24 years', value: 423 },
+    { name: '25 to 34 years', value: 531 },
+    { name: '35 to 44 years', value: 484 },
+    { name: '45 to 54 years', value: 556 },
+    { name: '55 to 64 years', value: 208 },
+    { name: '65 years and over', value: 116 }
+  ];
+
+  const ageDistributionAug = [
+    { name: '13 to 17 years', value: 360 },
+    { name: '18 to 24 years', value: 768 },
+    { name: '25 to 34 years', value: 1017 },
+    { name: '35 to 44 years', value: 1351 },
+    { name: '45 to 54 years', value: 1543 },
+    { name: '55 to 64 years', value: 828 },
+    { name: '65 years and over', value: 748 }
+  ];
+
+  const ageDistributionSep = [
+    { name: '13 to 17 years', value: 204 },
+    { name: '18 to 24 years', value: 494 },
+    { name: '25 to 34 years', value: 687 },
+    { name: '35 to 44 years', value: 646 },
+    { name: '45 to 54 years', value: 636 },
+    { name: '55 to 64 years', value: 317 },
+    { name: '65 years and over', value: 174 }
+  ];
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8', '#82ca9d', '#ffc658'];
 
@@ -37,7 +58,7 @@ const WhakapikeAkeDashboard = () => {
 
   return (
     <div className="space-y-8 p-4 bg-gray-100 rounded-lg">
-      <h2 className="text-2xl font-bold mb-4">Whakapiki Ake: Comprehensive Facebook Insights Dashboard</h2>
+      <h2 className="text-2xl font-bold mb-4">Whakapiki Ake: Comprehensive Social Insights Dashboard</h2>
       
       <div className="bg-white p-4 rounded-lg shadow">
         <h3 className="text-xl font-semibold mb-2">Rangatahi Reach and Content Volume</h3>
@@ -78,11 +99,11 @@ const WhakapikeAkeDashboard = () => {
       </div>
 
       <div className="bg-white p-4 rounded-lg shadow">
-        <h3 className="text-xl font-semibold mb-2">Age Distribution of Audience</h3>
+        <h3 className="text-xl font-semibold mb-2">Age Distribution of Audience July</h3>
         <ResponsiveContainer width="100%" height={300}>
           <PieChart>
             <Pie
-              data={ageDistribution}
+              data={ageDistributionJuly}
               cx="50%"
               cy="50%"
               labelLine={false}
@@ -91,7 +112,53 @@ const WhakapikeAkeDashboard = () => {
               dataKey="value"
               label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
             >
-              {ageDistribution.map((entry, index) => (
+              {ageDistributionJuly.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+              ))}
+            </Pie>
+            <Tooltip />
+          </PieChart>
+        </ResponsiveContainer>
+      </div>
+
+      <div className="bg-white p-4 rounded-lg shadow">
+        <h3 className="text-xl font-semibold mb-2">Age Distribution of Audience August</h3>
+        <ResponsiveContainer width="100%" height={300}>
+          <PieChart>
+            <Pie
+              data={ageDistributionAug}
+              cx="50%"
+              cy="50%"
+              labelLine={false}
+              outerRadius={80}
+              fill="#8884d8"
+              dataKey="value"
+              label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+            >
+              {ageDistributionAug.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+              ))}
+            </Pie>
+            <Tooltip />
+          </PieChart>
+        </ResponsiveContainer>
+      </div>
+
+      <div className="bg-white p-4 rounded-lg shadow">
+        <h3 className="text-xl font-semibold mb-2">Age Distribution of Audience September</h3>
+        <ResponsiveContainer width="100%" height={300}>
+          <PieChart>
+            <Pie
+              data={ageDistributionSep}
+              cx="50%"
+              cy="50%"
+              labelLine={false}
+              outerRadius={80}
+              fill="#8884d8"
+              dataKey="value"
+              label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+            >
+              {ageDistributionSep.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
               ))}
             </Pie>
